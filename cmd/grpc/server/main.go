@@ -1,47 +1,28 @@
-// package main
+package main
 
-// import (
-// 	"log"
-// 	"net"
+import (
+	"fmt"
+	"log"
+	"net"
 
-// 	"github.com/ldenholm/porus/pb"
-// 	"google.golang.org/grpc"
-// )
+	"github.com/ldenholm/porus/internal/grpc/impl"
+	"google.golang.org/grpc"
+)
 
-// // gRPC API for Account Service
+func main() {
+	// create a listener on TCP port 7777
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 7777))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	// create a server instance
+	serv := impl.AccountServiceImpl{}
+	// create a gRPC server object
+	grpcServer := grpc.NewServer()
 
-// const (
-// 	port     = ":50051"
-// 	clientID = "account-api"
-// )
-
-// // Types
-// type AccountServiceServer struct {
-// 	GetBalance __.AccountServiceServer.GetBalance()
-// }
-
-// // Method Implementation
-// //func (s *server) GetBalance(BalanceRequest) returns (BalanceResponse) {}
-
-// // Server
-// func main() {
-// 	lis, err := net.Listen("tcp", port)
-// 	if err != nil {
-// 		log.Fatalf("failed to listen: %v", err)
-// 	}
-
-// 	// Creates gRPC server
-// 	s := grpc.NewServer()
-// 	srv := __.AccountServiceServer.GetBalance()
-// 	//__.RegisterAccountServiceServer(s, )
-// 	s.Serve(lis)
-// }
-
-// // Connect to NATS
-// // err = comp.ConnectToNATSStreaming(
-// // 	clusterID,
-// // 	stan.NatsURL(stan.DefaultNatsURL),
-// // )
-// // if err != nil {
-// // 	log.Fatal(err)
-// // }
+	impl.RegisterAccountServiceServer(grpcServer, &serv)
+	// start the server
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %s", err)
+	}
+}
