@@ -1,1 +1,1 @@
-protoc --proto_path=pb --proto_path=third_party --go_out=plugins=grpc:pb eventstore.proto
+protoc --proto_path=pb --proto_path=third_party --go_out=plugins=grpc:pb account.proto

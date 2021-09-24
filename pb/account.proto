@@ -1,0 +1,25 @@
+syntax = "proto3";
+package pb;
+option go_package = ".";
+
+// Service
+service AccountService {
+    rpc GetBalance(BalanceRequest) returns (BalanceResponse) {}
+    rpc AddFunds(AddFundsRequest) returns (AddFundsResponse) {}
+}
+
+// Messages
+message BalanceRequest {
+    int32 user_id = 1;
+}
+message BalanceResponse {
+    float balance = 1;
+}
+
+message AddFundsRequest {
+    int32 user_id = 1;
+}
+
+message AddFundsResponse {
+    float total = 1;
+}
