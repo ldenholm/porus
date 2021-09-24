@@ -6,6 +6,7 @@ import (
 	"net"
 
 	"github.com/ldenholm/porus/internal/grpc/impl"
+	"github.com/ldenholm/porus/pb"
 	"google.golang.org/grpc"
 )
 
@@ -20,7 +21,7 @@ func main() {
 	// create a gRPC server object
 	grpcServer := grpc.NewServer()
 
-	impl.RegisterAccountServiceServer(grpcServer, &serv)
+	pb.RegisterAccountServiceServer(grpcServer, &serv)
 	// start the server
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %s", err)
