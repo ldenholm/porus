@@ -4,7 +4,7 @@
 // 	protoc        v3.18.0
 // source: account.proto
 
-package __
+package impl
 
 import (
 	context "context"
